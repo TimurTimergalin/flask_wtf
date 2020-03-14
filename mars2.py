@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request, redirect
 # from loginform import LoginForm
 
 app = Flask(__name__)
@@ -69,6 +69,22 @@ def distribution():
                  'Тедди Сандерс',
                  'Шон Бин']
     return render_template('placement.html', name_list=name_list)
+
+
+@app.route('/galery', methods=['GET', 'POST'])
+def galery():
+    if request.method == 'POST':
+        name = request.form.get('file')
+        print(name)
+        with open('images.txt', 'w') as file:
+            file.write(str(name))
+        with open(url_for('static', filename='img')[1:] + f'/{name}', 'w'):
+            file = request.files['file']
+            file.save(url_for('static', filename=f'img/{name}')[1:])
+    elif request.method == 'GET':
+        with open('images.txt') as file:
+            images = [i for i in file]
+        return render_template('galery.html', images=images)
 
 
 if __name__ == '__main__':
