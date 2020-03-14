@@ -1,6 +1,8 @@
 from flask import Flask, render_template, url_for
+# from loginform import LoginForm
 
 app = Flask(__name__)
+# app.config['SECRET KEY'] = '0875142BE88530AAD1FFEC66DE4982BF'
 
 
 @app.route('/<title>')
@@ -56,6 +58,17 @@ def answer():
         'css_link': url_for('static', filename='css/auto_answer.css')
     }
     return render_template('auto_answer.html', **kwargs)
+
+
+@app.route('/distribution')
+def distribution():
+    name_list = ['Ридли Скотт',
+                 'Энди Уир',
+                 'Марк Уотни',
+                 'Венката Капур',
+                 'Тедди Сандерс',
+                 'Шон Бин']
+    return render_template('placement.html', name_list=name_list)
 
 
 if __name__ == '__main__':
